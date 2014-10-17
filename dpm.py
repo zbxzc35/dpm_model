@@ -14,4 +14,6 @@ class Dpm:
 	def get_transition_probability(self, i, j):
 		return np.exp(self.q[i][j])
 
+
+		
 	
