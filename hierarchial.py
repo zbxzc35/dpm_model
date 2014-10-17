@@ -3,14 +3,21 @@ import matplotlib.pyplot as plt
 import pymc as pm
 import numpy as np
 import pandas as pd
+import state
 
 k = 10
 d = 1
+findings = np.random.normal(1, scale=1, size=(k, d))
+
+"""
 xtrue = np.random.randint(2,size=k)
 ztrue = np.random.normal(1, scale=1, size=(k, d))
 ltrue = np.random.normal(1, scale=1, size=d)
-
 odata = 1-(1-ltrue)*(1-xtrue*ztrue) 
+"""
+
+state1 = state.State(k, d, findings)
+
 
 #odata = np.random.normal(loc=o_eq, scale=.75, size=(k, d))
 
@@ -22,7 +29,7 @@ with pm.Model() as model:
 	l = pm.Normal('l', mu=1, sd=2., shape=d)    
 	o_eq = 1-(1-l)*(1-x*z)
 
-	o = pm.Normal('o', mu=o_eq, sd=.75, observed=odata)
+	o = pm.Normal('o', mu=o_eq, sd=.75, observed=state1.findings)
 
 
 with model:    
