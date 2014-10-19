@@ -11,9 +11,11 @@ class Dpm:
 		print 'Parameters'
 		print self.pi
 
-	def get_transition_probability(self, i, j):
-		return np.exp(self.q[i][j])
+	def get_transition_probability(self, i, j, interval):
+		return np.exp(self.q[i][j]*interval)
 
+	def get_initial_probability(self):
+		return self.pi
 
 		
 	
