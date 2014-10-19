@@ -58,24 +58,27 @@ if __name__ == "__main__":
 	#update pi
 	initiail_state = 1
 	total_state_i = 0
-	total_itnitial_state = 0
-	
-	for patient in patients_data:
-		#Initial transition probabilty
-		total_initial_state += dpm.get_trainsition_probability(i,j,1)
-	"""
-		for m in xrange(M):
-			total_state_i += dpm.get_trainsition_probability(i,j)
-	dpm.pi = total_initial_state/total_state_i
 
+	stage_th = 0
+	for stage in xrange(M):
+		total_initial_state = 0
+		for patient in patients_data:
+			#Initial transition probabilty
+			total_initial_state += model.get_initial_probability()[stage]
+		mode_total_initial_state = 0	
+		for mode in xrange(M):
+			mode_total_initial_state += model.get_initial_probability()[mode]
+		model.pi[stage_th] = total_initial_state/mode_total_initial_state
+		stage_th += 1
 
 	#update Q
-	old_q = dpm.q
-	Nij, Ri = eigen.get_eigen_decomposition(dpm.q, patient_data)
-	dpm.q = Nij/Ri
+	old_q = model.q
+	Nij, Ri = eigen.get_eigen_decomposition(model.q, patients_data, M)
+	model.q = Nij/Ri
 
+	"""
 	#Check convergens
-	if abs(old_q - dpm.q) < 0.01:
+	if abs(old_q - model.q) < 0.01:
 		print 'Finish' 
         """
 
