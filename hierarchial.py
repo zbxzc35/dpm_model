@@ -21,20 +21,20 @@ state1 = state.State(k, d, findings)
 
 #odata = np.random.normal(loc=o_eq, scale=.75, size=(k, d))
 
+def gibbs_sampling(model, findings):
+	with pm.Model() as model:
+		#priors
+		x = pm.Normal('x', mu=0., sd=1)    
+		z = pm.Normal('z', mu=1, sd=2., shape=(k, d))    
+		l = pm.Normal('l', mu=1, sd=2., shape=d)    
+		o_eq = 1-(1-l)*(1-x*z)
 
-with pm.Model() as model:
-	#priors
-	x = pm.Normal('x', mu=0., sd=1)    
-	z = pm.Normal('z', mu=1, sd=2., shape=(k, d))    
-	l = pm.Normal('l', mu=1, sd=2., shape=d)    
-	o_eq = 1-(1-l)*(1-x*z)
-
-	o = pm.Normal('o', mu=o_eq, sd=.75, observed=state1.findings)
+	o = pm.Normal('o', mu=o_eq, sd=.75, observed=findings)
 
 
-with model:    
-	start = pm.find_MAP()
-	step = pm.NUTS()
-	trace = pm.sample(10000, step, start)
+	with model:    
+		start = pm.find_MAP()
+		step = pm.NUTS()
+		trace = pm.sample(10000, step, start)
 
-pm.traceplot(trace).savefig("build/TEST.png")
+	pm.traceplot(trace).savefig("build/TEST.png")
