@@ -31,23 +31,25 @@ if __name__ == "__main__":
 	
 	print model.q.shape
 
+        #Make state
+	"""
+	j_v= 0
+	states = []
+	for visit in patient:
+		  comorbidities = np.random.randint(2,size=K)
+                  s = state.State(comorbidities, visit[j_v])
+		  states.append(s)
+	"""
+
         #Optimization EM algorithm
 	while True:
 		#E-step
 		for i in xrange(M):
 			for j in xrange(M):
 				for patient in patients_data:
-					#Make states
-					j_v=0
-					states = []
-					for visit in patient:
-		  				comorbidities = np.random.randint(2,size=K)
-                  				s = state.State(comorbidities, visit[j_v])
-		  				states.append(s)
-						
-						#Gibbs Sampling
-						gibbs.gibbs_sampling(model, visit[j_v][1:], K, D)
-		  				j_v +=1
+						for findings in patient:
+							#Gibbs Sampling
+							gibbs.gibbs_sampling(model, findings[1:], K, D, M, 1, 0)
 
 				#Compute Cij
 				Cij = 0

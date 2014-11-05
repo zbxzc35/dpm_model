@@ -16,7 +16,7 @@ def get_phi(model, K, d, Od):
 	calc_tmp = 1
 	for k in xrange(K):
 		calc_tmp =  calc_tmp*(1-model.x[k]*model.z[k][d])
-	if int(Od[d]) == 1:
+	if int(Od) == 1:
 		pre = (1-(1-model.l[d]))*calc_tmp
 		return pre*calc_tmp
 	else:
@@ -48,9 +48,9 @@ def get_sample_probability(model, findings, K, D, j, i):
 
 	return tmp_0*tmp_1*tmp_2
 
-def gibbs_sampling(model, findings, K, D, j, i):
+def gibbs_sampling(model, findings, K, D, M , j, i):
 	p_old = get_sample_probability(model, findings, K, D, j, i)
-	for inc in xrange(1000):
+	for inc in xrange(100):
 		for k in xrange(K):
 			for m in xrange(M):
 				model.update_b(inc, k, m)
@@ -92,4 +92,4 @@ if __name__ == "__main__":
 	
 
 	findings = np.random.randint(2 ,size=(1, D)) 
-	gibbs_sampling(model, findings, K, D, j, i)
+	gibbs_sampling(model, findings, K, D, M, j, i)
