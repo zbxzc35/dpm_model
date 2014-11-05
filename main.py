@@ -49,7 +49,7 @@ if __name__ == "__main__":
 				for patient in patients_data:
 						for findings in patient:
 							#Gibbs Sampling
-							gibbs.gibbs_sampling(model, findings[1:], K, D, M, 1, 0)
+							gibbs.gibbs_sampling(model, findings[1:], 1, 0)
 
 				#Compute Cij
 				Cij = 0

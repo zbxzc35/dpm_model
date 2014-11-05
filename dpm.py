@@ -8,7 +8,9 @@ class Dpm:
 		self.pi = np.random.random(m)
 		self.q = np.random.random((m, m))
 		self.x = np.random.randint(2 ,size=k)
-
+                self.k = k
+		self.m = m
+		self.d = d
 		for i in xrange(len(self.q)):
 			self.q[i][i] = -np.sum(self.q[i][1:])
 
