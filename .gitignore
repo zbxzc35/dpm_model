@@ -6,10 +6,8 @@
 build
 .lock-waf*
 build
-data
 .DS_Store
-ex-configs
-trained_model*
 store
 data
+pymc_tool.py
 test.py

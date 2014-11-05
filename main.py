@@ -1,5 +1,5 @@
 import numpy as np
-import dpm, state, eigen, hierarchial
+import dpm, state, eigen, gibbs
 
 def read_synthetic_data(d, m):
 	#Findings per states
@@ -46,7 +46,7 @@ if __name__ == "__main__":
 		  				states.append(s)
 						
 						#Gibbs Sampling
-						hierarchial.gibbs_sampling(model, visit[j_v][1:])
+						gibbs.gibbs_sampling(model, visit[j_v][1:], K, D)
 		  				j_v +=1
 
 				#Compute Cij
